@@ -56,11 +56,12 @@ class Core
         $data['sign'] = md5($this->config['auth_key'] . $data['time']);
         $response = $this->getHttpData(
             $this->config['url'],
-            json_encode($data),
+            "<<".json_encode($data,JSON_UNESCAPED_UNICODE).">>",
             '',
             '',
             '',
             $this->config['timeout']);
+        var_dump("<<".json_encode($data).">>");
     }
 
     /**
@@ -74,7 +75,7 @@ class Core
         $data = [
             "function" => "sendPrivateMsg",
             "wxid" => $wxid,
-            'type' => $type
+            'type' => "$type"
         ];
 
         if ($type == 1) {
