@@ -1,0 +1,21 @@
+{
+  "name": "fastgoo/wechat-hook-phpsdk",
+  "description": "这是为易语言微信HOOK工具提供http对接服务的SDK",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mr.Zhou",
+      "email": "773729704@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "monolog/monolog": "^1.23"
+  },
+  "autoload": {
+    "psr-4": {
+      "WechatHook\\": "src/"
+    }
+  }
+}
