@@ -29,7 +29,7 @@ switch ($receive->_data['type']) {
         break;
     case "event":
         if ($receive->_data['msg_type'] == 1) {//文字
-            if ($receive->_data['msg_wxid'] == "5305302988@chatroom") {
+            if (in_array($receive->_data['msg_wxid'],["5305302988@chatroom","5444321254@chatroom"])) {
                 if ($receive->_data['isAtMe']) {
                     if (strpos($receive->_data['msg'], "帮助") !== false) {
                         $hook->core->sendMsg($receive->_data['msg_wxid'], 1,
