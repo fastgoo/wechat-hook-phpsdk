@@ -52,16 +52,17 @@ class Core
 
     public function send($data)
     {
-        $data['time'] = time();
+        $data['time'] = (string)time();
         $data['sign'] = md5($this->config['auth_key'] . $data['time']);
         $response = $this->getHttpData(
             $this->config['url'],
-            "<<".json_encode($data,JSON_UNESCAPED_UNICODE).">>",
+            "<<" . json_encode($data, JSON_UNESCAPED_UNICODE) . ">>",
             '',
             '',
             '',
             $this->config['timeout']);
-        var_dump("<<".json_encode($data).">>");
+        var_dump($response);
+        var_dump("<<" . json_encode($data) . ">>");
     }
 
     /**
@@ -73,15 +74,34 @@ class Core
     public function sendMsg($wxid, $type, $msg)
     {
         $data = [
-            "function" => "sendPrivateMsg",
+            "function" => "sendMsg",
             "wxid" => $wxid,
             'type' => "$type"
         ];
-
-        if ($type == 1) {
-            $data['msg'] = $msg;
-        } else {
-            $data['data'] = $msg;
+        switch ($type) {
+            case 1:
+                $data['msg'] = $msg;
+                break;
+            case 2:
+                $data['imgName'] = $msg['name'];
+                $data['imgUrl'] = $msg['url'];
+                break;
+            case 3:
+                $data['fileName'] = $msg['name'];
+                $data['fileUrl'] = $msg['url'];
+                break;
+            case 4:
+                $data['data']['wxid'] = $msg['wxid'];
+                $data['data']['nickname'] = $msg['nickname'];
+                break;
+            case 5:
+                $data['data']['title'] = $msg['title'];
+                $data['data']['content'] = $msg['content'];
+                $data['data']['url'] = $msg['url'];
+                $data['data']['img'] = $msg['img'];
+                break;
+            default:
+                exit("消息类型错误");
         }
         $this->send($data);
     }
@@ -90,13 +110,15 @@ class Core
      * 邀请好友加入群聊
      * @param $wxid
      * @param $group_wxid
+     * @param int $invite_type
      */
-    public function roomAddUser($wxid, $group_wxid)
+    public function roomAddUser($wxid, $group_wxid, $invite_type = 1)
     {
         $data = [
             "function" => "roomAddUser",
             "wxid" => $wxid,
-            'group_wxid' => $group_wxid
+            'group_wxid' => $group_wxid,
+            "invite_type" => $invite_type
         ];
         $this->send($data);
     }
@@ -117,6 +139,21 @@ class Core
     }
 
     /**
+     * 设置群名称
+     * @param $group_wxid
+     * @param $name
+     */
+    public function roomSetName($group_wxid, $name)
+    {
+        $data = [
+            "function" => "roomSetName",
+            "group_wxid" => $group_wxid,
+            'name' => $name
+        ];
+        $this->send($data);
+    }
+
+    /**
      * 设置群公告
      * @param $group_wxid
      * @param $msg
@@ -127,6 +164,55 @@ class Core
             "function" => "roomSetAnnouncement",
             "group_wxid" => $group_wxid,
             'msg' => $msg
+        ];
+        $this->send($data);
+    }
+
+    /**
+     * 退出群聊
+     * @param $group_wxid
+     */
+    public function roomExit($group_wxid)
+    {
+        $data = [
+            "function" => "roomExit",
+            "group_wxid" => $group_wxid,
+        ];
+        $this->send($data);
+    }
+
+    /**
+     * 创建群聊
+     * @param array $wxidArr
+     * @param $roomName 设置群名称
+     * @param $msg 创建成功的欢迎语
+     */
+    public function roomCreate(Array $wxidArr, $roomName, $msg)
+    {
+        $data = [
+            "function" => "roomCreate",
+            "wxidArr" => $wxidArr,
+            "room" => [
+                "name" => $roomName,
+                "msg" => $msg
+            ]
+        ];
+        $this->send($data);
+    }
+
+    /**
+     * 发送at消息
+     * @param $group_wxid
+     * @param $at_user_wxid
+     * @param $msg
+     */
+    public function sendMsgAtUser($group_wxid, $at_user_wxid, $msg)
+    {
+        $data = [
+            "function" => "sendMsgAtUser",
+            "group_wxid" => $group_wxid,
+            "at_wxid" => $at_user_wxid,
+            "msg" => $msg,
         ];
         $this->send($data);
     }
@@ -157,7 +243,19 @@ class Core
             "function" => "addFriend",
             "wxid" => $wxid,
             'desc' => $desc,
-            "from" => "14"
+        ];
+        $this->send($data);
+    }
+
+    /**
+     * 删除好友
+     * @param $wxid
+     */
+    public function deleteFriend($wxid)
+    {
+        $data = [
+            "function" => "deleteFriend",
+            "wxid" => $wxid,
         ];
         $this->send($data);
     }

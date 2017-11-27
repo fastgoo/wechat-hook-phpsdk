@@ -22,8 +22,13 @@ class Receive
     public function getParam()
     {
         $data = $_POST;
+
+        if (!empty($data['type']) && in_array($data['type'], ["login_success", "login_out"])) {
+            $data['msg_time'] = $data['time'];
+        }
+
         if (!empty($this->_config['auth_key'])) {
-            if (empty($data['sign']) || empty($data['time'])) {
+            if (empty($data['sign']) || empty($data['msg_time'])) {
                 exit("无法获取客户端发送的sign、time字段");
             }
             if ($data['sign'] != md5($this->_config['auth_key'] . $data['time'])) {
@@ -33,22 +38,19 @@ class Receive
                 exit("数据已过有效期");
             }
         }
-
-        /** 判断消息ID是群组还是好友 */
-        if (!empty($data['msg_wxid'])) {
-            if (strpos($data['msg_wxid'], "@chatroom") === false) {
-                $data['msg_from'] = 1;
-            } else {
-                $data['msg_from'] = 2;
-                $arr = explode(":", $data['msg']);
-                $data['user_wxid'] = $arr[0];
-                $data['msg'] = str_replace([$data['user_wxid'] . ":","\n","\t"], '',$data['msg']);
-            }
-        }
         /** 格式化消息里面的xml代码 */
         if (!empty($data['msg_type']) && $data['msg_type'] != 1) {
             if (strpos($data['msg'], "<") !== false && strpos($data['msg'], ">") !== false) {
-                $data['msg'] = json_decode(json_encode(simplexml_load_string(str_replace(["\n","\t"],"",$data['msg']))),true);
+                $data['msg'] = json_decode(json_encode(simplexml_load_string(str_replace(["\n", "\t"], "", $data['msg']))), true);
+            }
+        }
+        /** 格式化消息里面的xml代码 */
+        if (!empty($data['at_user'])) {
+            $data['at_user'] = explode(",", $data['at_user']);
+            if ($data['at_user']) {
+                if ($my_key = array_search($data['g_wxid'], $data['at_user'])) {
+                    unset($data['at_user'][$my_key]);
+                }
             }
         }
         $this->_data = $data;
