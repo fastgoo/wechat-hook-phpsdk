@@ -48,7 +48,8 @@ class Receive
         if (!empty($data['at_user'])) {
             $data['at_user'] = explode(",", $data['at_user']);
             if ($data['at_user']) {
-                if ($my_key = array_search($data['g_wxid'], $data['at_user'])) {
+                $my_key = array_search($data['g_wxid'], $data['at_user']);
+                if ($my_key >= 0 && $my_key !== false) {
                     unset($data['at_user'][$my_key]);
                 }
             }
