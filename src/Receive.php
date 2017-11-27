@@ -41,15 +41,14 @@ class Receive
             } else {
                 $data['msg_from'] = 2;
                 $arr = explode(":", $data['msg']);
-                $data['group_wxid'] = $data['msg_wxid'];
-                $data['msg_wxid'] = $arr[0];
-                $data['msg'] = str_replace($data['msg_wxid'] . ":", $data['msg']);
+                $data['user_wxid'] = $arr[0];
+                $data['msg'] = str_replace([$data['user_wxid'] . ":","\n","\t"], '',$data['msg']);
             }
         }
         /** 格式化消息里面的xml代码 */
         if (!empty($data['msg_type']) && $data['msg_type'] != 1) {
             if (strpos($data['msg'], "<") !== false && strpos($data['msg'], ">") !== false) {
-                $data['msg'] = json_encode((array)simplexml_load_string($data['msg']));
+                $data['msg'] = json_decode(json_encode(simplexml_load_string(str_replace(["\n","\t"],"",$data['msg']))),true);
             }
         }
         $this->_data = $data;

@@ -1,0 +1,9 @@
+test.log
+!log/
+cache/*.php
+!cache/
+.idea/
+vendor/
+composer.lock
+.DS_Store
+app/.DS_Store
