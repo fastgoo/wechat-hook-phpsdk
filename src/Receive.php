@@ -31,7 +31,7 @@ class Receive
             if (empty($data['sign']) || empty($data['msg_time'])) {
                 exit("无法获取客户端发送的sign、time字段");
             }
-            if ($data['sign'] != md5($this->_config['auth_key'] . $data['time'])) {
+            if ($data['sign'] != md5($this->_config['auth_key'] . $data['msg_time'])) {
                 exit("签名数据校验失败，请核对认证key");
             }
             if ($data['time'] < time() - $this->_config['expire_time']) {
