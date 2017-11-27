@@ -34,7 +34,7 @@ class Receive
             if ($data['sign'] != md5($this->_config['auth_key'] . $data['msg_time'])) {
                 exit("签名数据校验失败，请核对认证key");
             }
-            if ($data['time'] < time() - $this->_config['expire_time']) {
+            if ($data['msg_time'] < time() - $this->_config['expire_time']) {
                 exit("数据已过有效期");
             }
         }
