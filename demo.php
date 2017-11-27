@@ -89,8 +89,8 @@ switch ($receive->_data['type']) {
                 if (strpos($receive->_data['msg'], "拉我进测试群1") !== false) {
                     $hook->core->roomAddUser($receive->_data['msg_wxid'], "5305302988@chatroom");
                 }
-                if (strpos($receive->_data['msg'], "拉我进测试群1") !== false) {
-                    $hook->core->roomAddUser($receive->_data['msg_wxid'], "5305302988@chatroom");
+                if (strpos($receive->_data['msg'], "拉我进测试群2") !== false) {
+                    $hook->core->roomAddUser($receive->_data['msg_wxid'], "5444321254@chatroom");
                 }
                 if (strpos($receive->_data['msg'], "创建测试群") !== false) {
                     $rand =rand(0,100);
