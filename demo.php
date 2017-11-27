@@ -119,6 +119,8 @@ switch ($receive->_data['type']) {
             $hook->core->sendMsg($receive->_data['msg_wxid'], 1, "欢迎新人加入群聊，开始发言吧");
         } else if ($receive->_data['msg_type'] == 1005) {//添加好友成功
             $hook->core->sendMsg($receive->_data['msg_wxid'], 1, "我们是好友了，开始装逼吧");
+        } else if ($receive->_data['msg_type'] == 1006) {//修改群名称事件
+            $hook->core->sendMsg($receive->_data['msg_wxid'], 1, $receive->_data['msg']);
         } else if ($receive->_data['msg_type'] == 3701) {//收到添加好友通知
             $desc = $receive->_data['msg']['@attributes']['content'];
             if (strpos($desc, "测试") !== false || strpos($desc, "机器人") !== false) {
