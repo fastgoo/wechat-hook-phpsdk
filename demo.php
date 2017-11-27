@@ -76,6 +76,9 @@ switch ($receive->_data['type']) {
                             $hook->core->roomKickUser($receive->_data['msg_wxid'], $val);
                         }
                     }
+                    if (strpos($receive->_data['msg'], "@我") !== false) {
+                        $hook->core->sendMsgAtUser($receive->_data['msg_wxid'],$receive->_data['send_user_wxid'], "@你了，你觉得如何(目前没办法高效的获取到你的名称，所以就用你代替吧)");
+                    }
                 }
             }
             if ($receive->_data['from_type'] == 1) {

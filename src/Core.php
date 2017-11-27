@@ -118,7 +118,7 @@ class Core
             "function" => "roomAddUser",
             "wxid" => $wxid,
             'group_wxid' => $group_wxid,
-            "invite_type" => $invite_type
+            "invite_type" => (string)$invite_type
         ];
         $this->send($data);
     }
