@@ -39,14 +39,14 @@ switch ($receive->_data['type']) {
                         $hook->core->sendMsg(
                             $receive->_data['msg_wxid'],
                             2,
-                            ["url" => "高效图片.jpg", "name" => "http://cdnsource.9377.com/uploads/2015-12/02/5d882460adec7c2e.jpg"]
+                            ["url" => "http://cdnsource.9377.com/uploads/2015-12/02/5d882460adec7c2e.jpg", "name" => "高效图片.jpg"]
                         );
                     }
                     if (strpos($receive->_data['msg'], "文件测试") !== false) {
                         $hook->core->sendMsg(
                             $receive->_data['msg_wxid'],
                             3,
-                            ["url" => "高效图片.jpg", "name" => "http://cdnsource.9377.com/uploads/2015-12/02/5d882460adec7c2e.jpg"]
+                            ["url" => "http://cdnsource.9377.com/uploads/2015-12/02/5d882460adec7c2e.jpg", "name" => "高效图片.jpg"]
                         );
                     }
                     if (strpos($receive->_data['msg'], "名片测试") !== false) {
