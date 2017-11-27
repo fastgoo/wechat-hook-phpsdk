@@ -31,6 +31,10 @@ switch ($receive->_data['type']) {
         if ($receive->_data['msg_type'] == 1) {//文字
             if ($receive->_data['msg_wxid'] == "5305302988@chatroom") {
                 if ($receive->_data['isAtMe']) {
+                    if (strpos($receive->_data['msg'], "帮助") !== false) {
+                        $hook->core->sendMsg($receive->_data['msg_wxid'], 1,
+                            "1、文字测试\n2、图片测试\n3、文件测试\n4、名片测试\n5、链接测试\n6、发布公告123456\n7、修改群名称666\n8、踢出@用户\n9、@我\n10、私聊拉我进测试群1\n11、私聊拉我进测试群2");
+                    }
                     if (strpos($receive->_data['msg'], "文字测试") !== false) {
                         $hook->core->sendMsg($receive->_data['msg_wxid'], 1, "这是一条自动发出的文字信息");
                     }
@@ -88,6 +92,11 @@ switch ($receive->_data['type']) {
                 if (strpos($receive->_data['msg'], "拉我进测试群1") !== false) {
                     $hook->core->roomAddUser($receive->_data['msg_wxid'], "5305302988@chatroom");
                 }
+                if (strpos($receive->_data['msg'], "创建测试群") !== false) {
+                    $rand =rand(0,100);
+                    $hook->core->roomCreate(["wxid_k9jdv2j4n8cf12","wxid_ryq4iok1wrsh12","petergeiliso"],"微信PCHook测试群".$rand,"这里是测试 $rand 群，也是用来测试的");
+                }
+
             }
         } else if ($receive->_data['msg_type'] == 3) {//图片
             $hook->core->sendMsg($receive->_data['msg_wxid'], 1, "收到图片消息");
