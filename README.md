@@ -1,7 +1,8 @@
 项目介绍
 =======
-微信PC Hook工具 PHP-SDK 
+2018-4-12 项目功能迁到 https://github.com/fastgoo/padchat-php 
 
+微信PC Hook工具 PHP-SDK 
 目前这个2.5的版本已经不可用了，等待新版本出来发布通知。记得随时关注github的更新动态
 
 Composer 安装
