@@ -1,9 +1,10 @@
 项目介绍
 =======
-2018-4-12 项目功能迁到 https://github.com/fastgoo/padchat-php 
+:heartpulse: **[安利一个新的ipadchat项目](https://github.com/fastgoo/ipadchat-api)：** 该项目是基于HTTP通讯协议开发，安装难度低，下载demo就可运行。 
 
 微信PC Hook工具 PHP-SDK 
 目前这个2.5的版本已经不可用了，等待新版本出来发布通知。记得随时关注github的更新动态
+
 
 Composer 安装
 ------------
