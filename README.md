@@ -48,3 +48,6 @@ QQ：773729704 记得备注github
 微信：huoniaojugege  记得备注github
 
 需要做维系机器人管理系统的可以联系我
+
+## 加入微星开发者社区QQ群
+<img src="https://resource.fastgoo.net/201811161421163380.pic.jpg" width="240" height="300" alt="图片描述文字"/>
